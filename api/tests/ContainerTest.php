@@ -40,4 +40,18 @@ class ContainerTest extends TestCase
 
     }
 
+    /**
+     * @test
+     */
+    public function a_container_return_false_if_checking_service_is_not_exist()
+    {
+        // setup
+        $container = new Container();
+
+        $container->add('dependent-class', DependentClass::class);
+        // assert return false
+        $this->assertFalse($container->has('myservice'));
+        $this->assertTrue($container->has('dependent-class'));
+    }
+
 }
