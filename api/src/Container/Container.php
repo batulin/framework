@@ -11,8 +11,15 @@ class Container implements ContainerInterface
 
     public function add(string $id, string|object $concrete = null)
     {
-        $this->services[$id] = $concrete;
+        if (null === $concrete) {
+            if (!class_exists($id)) {
+                throw new ContainerException("Service $id could not be found");
+            }
 
+            $concrete = $id;
+        }
+
+        $this->services[$id] = $concrete;
     }
 
     public function get(string $id)
